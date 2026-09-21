@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+users.json
+clave.key
+privada.pem
+*.pem
