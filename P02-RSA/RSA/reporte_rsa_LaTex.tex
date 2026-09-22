@@ -1,0 +1,229 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Estilo
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{gray!10},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray!70!black}\itshape,
+    stringstyle=\color{orange},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    tabsize=4
+}
+\lstset{style=pythonstyle}
+
+\title{Seguridad Informática - Práctica 2 -- Algoritmo RSA}
+\author{Mauricio A Sonda Cahuich - 66611}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{¿Qué hice?}
+
+Para esta práctica programé en Python el algoritmo RSA para descifrar un
+mensaje que nos dieron, usando los primos $p = 67$ y $q = 83$. La idea era
+calcular $n$, $\varphi(n)$, encontrar el cuarto valor de $e$ que sirviera
+como clave pública, sacar su $d$ correspondiente (clave privada) y con eso
+descifrar el mensaje.
+
+Lo que hice diferente fue no solo contar los candidatos de $e$ hasta llegar
+al cuarto, sino que hice que el programa \textbf{probara cada uno} intentando
+descifrar el mensaje real, para comprobar cuál de verdad funciona y así tener
+una justificación más sólida (y no solo "porque sí es el cuarto").
+
+\section{Datos de inicio}
+
+\begin{align*}
+p &= 67 \\
+q &= 83
+\end{align*}
+
+Mensaje cifrado:
+\begin{center}
+1058, 2597, 4955, 4201, 3162, 4343, 2754, 2497, 336, 2597
+\end{center}
+
+\section{Paso 1: Sacar $n$}
+
+Esto es lo más fácil, nada más se multiplican los primos:
+
+\[
+n = p \times q = 67 \times 83 = 5561
+\]
+
+\section{Paso 2: Sacar $\varphi(n)$}
+
+\[
+\varphi(n) = (p-1)(q-1) = 66 \times 82 = 5412
+\]
+
+En el código nada más los calculo y los imprimo para tener registro:
+
+\begin{lstlisting}
+n = p * q
+phi = (p - 1) * (q - 1)
+
+print("n = " + str(n))
+print("phi(n) = " + str(phi) + "\n")
+\end{lstlisting}
+
+\section{Paso 3: Buscar el $e$ correcto}
+
+Aquí es donde le puse más trabajo. Sabemos que $e$ tiene que
+cumplir:
+
+\[
+1 < e < \varphi(n) \quad \text{y} \quad \mathrm{mcd}(e, \varphi(n)) = 1
+\]
+
+Entonces hice un while que va probando números desde el 2 hacia arriba, y
+cada vez que encuentra uno que cumple lo del mcd, lo cuenta como candidato.
+Pero en vez de solo quedarme con el cuarto y ya, hice que el programa
+\textbf{intentara descifrar el mensaje con cada candidato}, y si el
+resultado eran puros caracteres raros/no imprimibles, lo descartaba y seguía
+con el siguiente.
+
+\begin{lstlisting}
+e = 2
+while e < phi and not encontrado:
+
+    if mcd(e, phi) != 1:
+        e += 1
+        continue  # no cumple, ni lo cuento
+
+    contador += 1
+    d = calcularD(e, phi)
+
+    print("Candidato #" + str(contador) + ": e = " + str(e) + ", d = " + str(d))
+
+    intento = descifrarMensaje(mensajeCifrado, d, n)
+
+    if esTextoValido(intento):
+        print("Este si funciona! usamos e = " + str(e))
+        encontrado = True
+    else:
+        print("Este no sirve, el texto sale con basura.")
+
+    e += 1
+\end{lstlisting}
+
+Para saber si el texto "sirve" hice una función que checa que todos los
+caracteres estén en el rango normal de ASCII imprimible (del 32 al 126,
+o sea letras, números y símbolos normales):
+
+\begin{lstlisting}
+def esTextoValido(texto):
+    for c in texto:
+        if ord(c) < 32 or ord(c) > 126:
+            return False  # salio un caracter raro, este e no sirve
+    return True
+\end{lstlisting}
+
+\subsection{¿Por qué el cuarto candidato es el correcto?}
+
+Al correr el programa, los primeros candidatos que cumplen lo del mcd son
+$5$, $7$, $13$ y $17$. Cuando los probé uno por uno descifrando el mensaje:
+
+\begin{itemize}
+    \item Con $e = 5$ el mensaje sale puro símbolo raro, no sirve.
+    \item Con $e = 7$ pasa lo mismo, sale basura.
+    \item Con $e = 13$ otra vez sale texto sin sentido.
+    \item Con $e = 17$ (el cuarto) el mensaje \textbf{sí sale legible}, con
+    letras normales.
+\end{itemize}
+
+Entonces ahí queda comprobado: $e = 17$ no solo es el cuarto número que
+cumple la condición matemática, además es el que de verdad
+descifra bien el mensaje. Eso es la prueba de que es el correcto.
+
+\section{Paso 4: Sacar $d$ (clave privada)}
+
+$d$ tiene que cumplir que:
+
+\[
+e \times d \equiv 1 \pmod{\varphi(n)}
+\]
+
+En vez de usar el algoritmo extendido de Euclides a mano, hice que el
+programa lo fuera probando con un while hasta encontrar el valor que
+cumpliera:
+
+\begin{lstlisting}
+def calcularD(e, phi):
+    d = 1
+    while (d * e) % phi != 1:
+        d += 1  # le sigo subiendo hasta que de resto 1
+    return d
+\end{lstlisting}
+
+\section{Paso 5: Descifrar el mensaje}
+
+Para descifrar cada número del mensaje se usa la fórmula:
+
+\[
+m = c^{d} \bmod n
+\]
+
+Lo hice con un for que va multiplicando y sacando el módulo poco a poco
+(en vez de elevar todo de un jalón, porque los números se hacen enormes):
+
+\begin{lstlisting}
+def descifrar(c, d, n):
+    m = 1
+    # aqui se hace (c elevado a la d) mod n, pero poco a poco
+    for i in range(d):
+        m = (m * c) % n
+    return chr(m)
+\end{lstlisting}
+
+\section{Resultados}
+
+\begin{itemize}
+    \item \textbf{Clave pública:} $(e, n) = (17,\ 5561)$
+    \item \textbf{Clave privada:} $(d, n)$, la calcula el programa
+    \item \textbf{Mensaje cifrado:} 1058, 2597, 4955, 4201, 3162, 4343, 2754,
+    2497, 336, 2597
+    \item \textbf{Mensaje descifrado:} HOLA MUNDO
+\end{itemize}
+
+\section{Evidencias}
+
+\begin{itemize}
+    \item \textbf{Evidencia:} Captura con el resultado final en terminal
+\end{itemize}
+
+% Imagen
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{terminalRSA.png}
+    \caption{Consola mostrando el calculo e intentos.}
+\end{figure}
+
+\section{Conclusión}
+
+Con este programa no nada más se sacan las claves y se descifra el mensaje,
+sino que traté de hacer visible de manera clara cómo se llega al resultado
+final, y el porque el cuarto candidato de $e$ es el
+correcto: se prueban los candidatos válidos hasta que uno
+logra descifrar el mensaje de forma legible. Eso deja comprobado, con
+evidencia del propio programa, que la elección de $e = 17$ es la correcta.
+
+\end{document}

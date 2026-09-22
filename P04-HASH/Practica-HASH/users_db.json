@@ -1,0 +1,12 @@
+{
+    "admin": {
+        "salt": "abb7ad3afb9bc6e7b6d23b0f5d907232",
+        "iv": "wkG5MFV9Yll6vsS51PehUA==",
+        "hash": "OfkMwACA1bxg19NB+il/N0691e7rQizw/NtNE2Zxbk0tmCXZCcXaxPe2LrcvqUMgcY4nCTvkZjq1iL8JmUfsS0LMin9Mc96JYPOSc9mj+sY="
+    },
+    "Mau": {
+        "salt": "214e3ba626b92d21eb4cb26f3771aedf",
+        "iv": "gtJw08uQk71aMWoHuHrulw==",
+        "hash": "SLx785be6r90LEoOla7h99pIwOtMVGb87Z31DDCfUACBT5o/evVSgbXBgDfM6BmAMgnxqGtqhvfJO6QuyyIGro4Fj0pFnixxrEi1M2b++2o="
+    }
+}
