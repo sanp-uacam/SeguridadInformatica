@@ -1,0 +1,9 @@
+# Archivos que genera Python al ejecutar
+__pycache__/
+*.pyc
+
+# Claves RSA que genera el programa (nunca subir la privada)
+*.pem
+
+# Paquete cifrado que se genera en cada ejecucion
+paquete_cifrado.json
