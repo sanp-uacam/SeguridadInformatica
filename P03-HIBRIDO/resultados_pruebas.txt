@@ -1,0 +1,20 @@
+test_01_mensaje_basico (test_hibrido.PruebasHibrido.test_01_mensaje_basico) ... ok
+test_02_unicode (test_hibrido.PruebasHibrido.test_02_unicode) ... ok
+test_03_mensaje_vacio (test_hibrido.PruebasHibrido.test_03_mensaje_vacio) ... ok
+test_04_limites_bloque (test_hibrido.PruebasHibrido.test_04_limites_bloque) ... ok
+test_05_mensaje_largo (test_hibrido.PruebasHibrido.test_05_mensaje_largo) ... ok
+test_06_aleatoriedad (test_hibrido.PruebasHibrido.test_06_aleatoriedad) ... ok
+test_07_clave_incorrecta (test_hibrido.PruebasHibrido.test_07_clave_incorrecta) ... ok
+test_08_manipulacion (test_hibrido.PruebasHibrido.test_08_manipulacion) ... ok
+test_09_truncamientos (test_hibrido.PruebasHibrido.test_09_truncamientos) ... ok
+test_10_mezcla_sesiones (test_hibrido.PruebasHibrido.test_10_mezcla_sesiones) ... ok
+test_11_formato_y_descifrado_independiente (test_hibrido.PruebasHibrido.test_11_formato_y_descifrado_independiente) ... ok
+test_12_auxiliar_y_reuso (test_hibrido.PruebasHibrido.test_12_auxiliar_y_reuso) ... ok
+test_13_entradas_invalidas (test_hibrido.PruebasHibrido.test_13_entradas_invalidas) ... ok
+test_14_firma_original_por_teclado (test_hibrido.PruebasHibrido.test_14_firma_original_por_teclado) ... ok
+test_15_receptor_independiente (test_hibrido.PruebasHibrido.test_15_receptor_independiente) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.349s
+
+OK

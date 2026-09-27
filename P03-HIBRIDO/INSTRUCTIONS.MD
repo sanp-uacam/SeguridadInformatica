@@ -38,13 +38,3 @@ El sistema debe implementar tres funciones principales:
 - Debe implementar el cifrado AES en modo CBC
 
 ---
-
-## Entregables
-
-1. Código fuente con la implementación completa
-2. Documentación que incluya:
-   - Explicación del funcionamiento del algoritmo híbrido
-   - Justificación de elecciones de diseño (tamaño de claves, modo de operación, etc.)
-   - Diagrama de flujo del proceso
-3. Pruebas que demuestren el correcto funcionamiento
-4. Análisis de seguridad del sistema implementado
