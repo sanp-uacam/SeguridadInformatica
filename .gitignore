@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.pem
+# Base de usuarios local: no publicar datos de cuentas.
+P04-HASH/users-db.json
