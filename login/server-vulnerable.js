@@ -23,15 +23,15 @@ db.serialize(() => {
 });
 
 
-app.post("/login-vulnerable", (req, res) => { 
+app.post("/login-vulnerable", (req, res) => {
   const { username, password } = req.body;
 
 
-  const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+  const query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-  console.log("Query ejecutada:", query); 
+  console.log("Query ejecutada:", query);
 
-  db.get(query, (err, row) => {
+  db.get(query, [username, password], (err, row) => {
     if (err) return res.status(500).json({ error: err.message });
     if (row) return res.json({ ok: true, user: row.username });
     res.status(401).json({ ok: false, message: "Credenciales inválidas" });
