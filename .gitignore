@@ -1,8 +1,63 @@
+# Dependencies and package managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# Python
 .venv/
+venv/
 __pycache__/
-*.pyc
-.DS_Store
-users.json
+*.py[cod]
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
 clave.key
 privada.pem
-*.pem
+users.json
+
+# Local databases and data
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+data/
+
+# Logs
+logs/
+*.log
+
+# Test coverage and build output
+coverage/
+.nyc_output/
+dist/
+build/
+*.tsbuildinfo
+
+# Tool caches
+.cache/
+.parcel-cache/
+.eslintcache
+.npm/
+.yarn/
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors and temporary files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+tmp/
+temp/
+*.bak
