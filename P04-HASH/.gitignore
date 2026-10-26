@@ -1,0 +1,16 @@
+# Base de datos local de usuarios
+users-db.json
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Caché y archivos generados por Python
+__pycache__/
+*.py[cod]
+
+# Configuración local de editores y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
