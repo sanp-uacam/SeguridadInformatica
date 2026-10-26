@@ -31,8 +31,15 @@ def has_simple_sequence(password, sequence_length=3):
     return False
 
 
+def validate_credentials(username, password):
+    """Comprueba que el usuario y la contraseña no estén vacíos."""
+    if not username or not username.strip() or not password or not password.strip():
+        raise ValueError("El usuario y la contraseña no pueden estar vacíos.")
+
+
 def validate_password(username, password):
     """Valida las reglas indicadas para la contraseña."""
+    validate_credentials(username, password)
     errors = []
 
     if len(password) < 8:
@@ -219,7 +226,11 @@ class LoginApp:
             password = pass_entry.get()
             confirmation = confirm_entry.get()
 
-            if not username or not password or not confirmation:
+            try:
+                validate_credentials(username, password)
+                if not confirmation or not confirmation.strip():
+                    raise ValueError("La confirmación de la contraseña no puede estar vacía.")
+            except ValueError:
                 messagebox.showerror("Error", "Complete todos los campos.", parent=register_window)
                 return
 
@@ -276,8 +287,10 @@ class LoginApp:
         username = self.user_entry.get().strip()
         password = self.pass_entry.get()
 
-        if not username or not password:
-            messagebox.showerror("Error", "Por favor, complete todos los campos")
+        try:
+            validate_credentials(username, password)
+        except ValueError as error:
+            messagebox.showerror("Error", str(error))
             return
 
         stored_hash = self.users.get(username)

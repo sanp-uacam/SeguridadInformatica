@@ -16,6 +16,19 @@ python main.py
 
 Se abrirá la ventana de la práctica. Se necesita Python con Tkinter.
 
+## Pruebas de campos vacíos
+
+`validate_credentials(usuario, contraseña)` lanza `ValueError` si cualquiera
+de los campos está vacío o contiene únicamente espacios en blanco.
+El inicio de sesión captura la excepción y muestra un mensaje de error.
+En Python, la excepción integrada para este caso es `ValueError`, no `ValueException`.
+
+Ejecutar las pruebas sin abrir ventanas ni modificar la base de usuarios:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
 ## Evidencias
 
 La carpeta `evidencias` contiene seis capturas de la ventana de la aplicación:
