@@ -1,5 +1,18 @@
 # ================================
-# Dependencias
+# Python
+# ================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# ================================
+# Dependencias (Node)
 # ================================
 node_modules/
 npm-debug.log*
@@ -46,7 +59,7 @@ build/
 *.tsbuildinfo
 
 # ================================
-# Caché de herramientas
+# Cache de herramientas
 # ================================
 .cache/
 .parcel-cache/
@@ -60,6 +73,7 @@ build/
 .DS_Store
 Thumbs.db
 desktop.ini
+Desktop.ini
 
 # ================================
 # Editores / IDEs
