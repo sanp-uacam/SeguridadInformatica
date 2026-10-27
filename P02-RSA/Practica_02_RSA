@@ -1,0 +1,101 @@
+"""Practica 02: algoritmo RSA.
+
+Alumno: Carlos A. Salazar Santoyo
+Matricula: 59623
+Ejecucion: python Practica_02_RSA.py
+
+Ejemplo educativo con los datos del PDF; no requiere librerias externas.
+"""
+
+import math
+
+
+def euclides_extendido(a, b):
+    """Devuelve (mcd, x, y), donde a*x + b*y = mcd(a, b)."""
+    if b == 0:
+        return a, 1, 0
+
+    mcd, x1, y1 = euclides_extendido(b, a % b)
+    x = y1
+    y = x1 - (a // b) * y1
+    return mcd, x, y
+
+
+def main():
+    # Datos originales de la practica.
+    p = 67
+    q = 83
+    cifrado = [1058, 2597, 4955, 4201, 3162, 4343, 2754, 2497, 336, 2597]
+
+    print("PRACTICA 02 - ALGORITMO RSA")
+    print("Carlos A. Salazar Santoyo - 59623")
+
+    # Pasos 1 y 2: modulo RSA y funcion de Euler.
+    n = p * q
+    phi_n = (p - 1) * (q - 1)
+
+    print("\nPASOS 1 Y 2: CALCULAR n Y phi(n)")
+    print(f"n = {p} * {q} = {n}")
+    print(f"phi(n) = {p - 1} * {q - 1} = {phi_n}")
+
+    # Paso 3: buscar en orden los primeros cuatro enteros coprimos
+    # con phi(n), dentro del intervalo 1 < e < phi(n).
+    print("\nPASO 3: ELEGIR EL CUARTO CANDIDATO VALIDO PARA e")
+    candidatos_validos = []
+
+    for candidato in range(2, phi_n):
+        mcd = math.gcd(candidato, phi_n)
+        estado = "VALIDO" if mcd == 1 else "descartado"
+        print(f"e = {candidato:2d} -> mcd(e, phi(n)) = {mcd:2d} -> {estado}")
+
+        if mcd == 1:
+            candidatos_validos.append(candidato)
+            if len(candidatos_validos) == 4:
+                break
+
+    if len(candidatos_validos) < 4:
+        raise ValueError("No se encontraron cuatro candidatos validos para e.")
+
+    e = candidatos_validos[3]  # El indice 3 corresponde al cuarto elemento.
+    print("Candidatos validos en orden:", candidatos_validos)
+    print("Cuarto candidato elegido: e =", e)
+
+    # Paso 4: d es el inverso multiplicativo de e modulo phi(n).
+    print("\nPASO 4: CALCULAR d CON EUCLIDES EXTENDIDO")
+    mcd, x, y = euclides_extendido(e, phi_n)
+    if mcd != 1:
+        raise ValueError("e no tiene inverso multiplicativo modulo phi(n).")
+
+    d = x % phi_n  # Convierte el coeficiente en su representante positivo.
+    print(f"Identidad de Bezout: {e} * ({x}) + {phi_n} * ({y}) = {mcd}")
+    print(f"d = {x} mod {phi_n} = {d}")
+    print("Verificacion: (e * d) % phi(n) =", (e * d) % phi_n)
+    print(f"Clave publica (e, n): ({e}, {n})")
+    print(f"Clave privada (d, n): ({d}, {n})")
+
+    # Paso 5: descifrar cada bloque con m = c**d mod n.
+    # pow(c, d, n) calcula la potencia modular de forma eficiente.
+    print("\nPASO 5: DESCIFRAR EL MENSAJE")
+    caracteres = []
+    for c in cifrado:
+        if not 0 <= c < n:
+            raise ValueError(f"El bloque {c} debe cumplir 0 <= c < n.")
+        m = pow(c, d, n)
+        if not 0 <= m <= 127:
+            raise ValueError(f"El valor descifrado {m} no es ASCII estandar.")
+        caracter = chr(m)
+        caracteres.append(caracter)
+        print(f"c = {c:4d} -> m = {m:3d} -> {caracter!r}")
+
+    mensaje = "".join(caracteres)
+    print("\nMensaje descifrado:", mensaje)
+
+    # Comprobacion adicional: cifrar el resultado debe recuperar los bloques.
+    recifrado = [pow(ord(caracter), e, n) for caracter in mensaje]
+    if recifrado != cifrado:
+        raise ValueError("El recifrado no coincide con los bloques originales.")
+    print("Verificacion de recifrado: CORRECTA")
+
+
+if __name__ == "__main__":
+    main()
