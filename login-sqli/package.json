@@ -1,0 +1,14 @@
+{
+  "name": "login-sqli-demo",
+  "version": "1.0.0",
+  "description": "Demo educativa de inyeccion SQL en un login y su correccion por parametrizacion (Seguridad Informatica).",
+  "main": "server-vulnerable.js",
+  "scripts": {
+    "vulnerable": "node server-vulnerable.js",
+    "seguro": "node server-seguro.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  }
+}
