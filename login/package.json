@@ -1,0 +1,18 @@
+{
+  "name": "seginfo",
+  "version": "1.0.0",
+  "description": "67406 Login SQLi corregido mediante consultas parametrizadas",
+  "main": "server-vulnerable.js",
+  "scripts": {
+    "start": "node server-vulnerable.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [],
+  "author": "Moran Escalante Bryan Arturo",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0",
+    "sqlite3": "^6.0.1"
+  }
+}
