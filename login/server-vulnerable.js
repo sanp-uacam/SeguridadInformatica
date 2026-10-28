@@ -23,16 +23,24 @@ db.serialize(() => {
 });
 
 
-app.post("/login-vulnerable", (req, res) => { 
-  const { username, password } = req.body;
+app.post("/login-vulnerable", (req, res) => {
+  const body = req.body;
+  if (body === null || typeof body !== "object" || Array.isArray(body)) {
+    return res.status(400).json({ ok: false, message: "Solicitud inválida" });
+  }
 
+  const { username, password } = body;
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res.status(400).json({ ok: false, message: "Solicitud inválida" });
+  }
 
-  const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+  const query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-  console.log("Query ejecutada:", query); 
-
-  db.get(query, (err, row) => {
-    if (err) return res.status(500).json({ error: err.message });
+  db.get(query, [username, password], (err, row) => {
+    if (err) {
+      console.error("Error al consultar las credenciales:", err);
+      return res.status(500).json({ ok: false, message: "Error interno" });
+    }
     if (row) return res.json({ ok: true, user: row.username });
     res.status(401).json({ ok: false, message: "Credenciales inválidas" });
   });
