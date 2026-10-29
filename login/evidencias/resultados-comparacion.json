@@ -1,0 +1,339 @@
+{
+  "sourceCommit": "c3d7fa16fdd6447ed29866f636e86fc8dd025721",
+  "method": "HTTP local; SQLite en memoria; original adaptado en puerto y entrega del formulario",
+  "rows": [
+    {
+      "id": "P01",
+      "technique": "Comentario",
+      "username": "admin' -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P02",
+      "technique": "Comentario con otro usuario",
+      "username": "juan' -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "juan"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P03",
+      "technique": "Comentario sin espacio previo",
+      "username": "admin'--",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P04",
+      "technique": "Tautología numérica",
+      "username": "' OR 1=1 -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P05",
+      "technique": "Tautología de texto",
+      "username": "' OR '1'='1' -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P06",
+      "technique": "Tautología con usuario",
+      "username": "admin' OR '1'='1' -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P07",
+      "technique": "Inyección en contraseña",
+      "username": "inexistente",
+      "password": "' OR '1'='1",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P08",
+      "technique": "Contraseña y comentario",
+      "username": "juan",
+      "password": "x' OR 1=1 -- ",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P09",
+      "technique": "UNION: usuario inventado",
+      "username": "' UNION SELECT 1,'hacker','x' -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "hacker"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P10",
+      "technique": "UNION: extracción de contraseña",
+      "username": "' UNION SELECT id,password,username FROM users WHERE username='juan' -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "1234"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P11",
+      "technique": "Comentario y condición",
+      "username": "' OR 2>1 -- ",
+      "password": "incorrecta",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P12",
+      "technique": "Contraseña: comparación numérica",
+      "username": "inexistente",
+      "password": "' OR 7=7 -- ",
+      "baseline": 200,
+      "before": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "user": "admin"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P13",
+      "technique": "Comilla suelta: fuga de error",
+      "username": "admin'",
+      "password": "incorrecta",
+      "baseline": 500,
+      "before": {
+        "status": 500,
+        "body": {
+          "error": "SQLITE_ERROR: near \"incorrecta\": syntax error"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P14",
+      "technique": "UNION con columnas incorrectas",
+      "username": "' UNION SELECT 1 -- ",
+      "password": "incorrecta",
+      "baseline": 500,
+      "before": {
+        "status": 500,
+        "body": {
+          "error": "SQLITE_ERROR: SELECTs to the left and right of UNION do not have the same number of result columns"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P15",
+      "technique": "Comentario de MySQL no válido",
+      "username": "admin'#",
+      "password": "incorrecta",
+      "baseline": 500,
+      "before": {
+        "status": 500,
+        "body": {
+          "error": "SQLITE_ERROR: unrecognized token: \"#\""
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    },
+    {
+      "id": "P16",
+      "technique": "Condición falsa de control",
+      "username": "' OR 1=0 -- ",
+      "password": "incorrecta",
+      "baseline": 401,
+      "before": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      },
+      "after": {
+        "status": 401,
+        "body": {
+          "ok": false,
+          "message": "Credenciales inválidas"
+        }
+      }
+    }
+  ]
+}

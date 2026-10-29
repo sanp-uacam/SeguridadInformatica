@@ -1,0 +1,4 @@
+# Evitar que Git cambie saltos de línea dentro de documentos e imágenes.
+*.pdf binary
+*.jpg binary
+*.png binary

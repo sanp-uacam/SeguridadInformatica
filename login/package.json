@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server-vulnerable.js",
+    "test": "node --test tests/login.test.cjs",
+    "lab:vulnerable": "node laboratorio/server-original.js",
+    "compare": "node tests/compare.cjs"
   },
   "keywords": [],
   "author": "",

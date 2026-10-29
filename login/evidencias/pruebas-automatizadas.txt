@@ -1,0 +1,57 @@
+
+> seginfo@1.0.0 test
+> node --test tests/login.test.cjs
+
+✔ Acepta credenciales válidas de admin (52.8672ms)
+✔ Acepta credenciales válidas de juan (2.8739ms)
+✔ Rechaza credenciales incorrectas: {"username":"admin","password":"incorrecta"} (3.1637ms)
+✔ Rechaza credenciales incorrectas: {"username":"inexistente","password":"admin"} (1.57ms)
+✔ Rechaza credenciales incorrectas: {"username":"admin","password":" admin "} (1.6689ms)
+✔ Rechaza credenciales incorrectas: {"username":"Admin","password":"admin"} (1.3091ms)
+✔ P01: Comentario (1.4187ms)
+✔ P02: Comentario con otro usuario (1.5451ms)
+✔ P03: Comentario sin espacio previo (1.3372ms)
+✔ P04: Tautología numérica (1.4021ms)
+✔ P05: Tautología de texto (0.9897ms)
+✔ P06: Tautología con usuario (1.0186ms)
+✔ P07: Inyección en contraseña (1.1085ms)
+✔ P08: Contraseña y comentario (1.0697ms)
+✔ P09: UNION: usuario inventado (1.0293ms)
+✔ P10: UNION: extracción de contraseña (0.8247ms)
+✔ P11: Comentario y condición (0.78ms)
+✔ P12: Contraseña: comparación numérica (0.8415ms)
+✔ P13: Comilla suelta: fuga de error (0.9536ms)
+✔ P14: UNION con columnas incorrectas (0.8133ms)
+✔ P15: Comentario de MySQL no válido (1.7341ms)
+✔ P16: Condición falsa de control (0.7823ms)
+✔ Valida entrada: {} (0.7672ms)
+✔ Valida entrada: {"username":"admin"} (0.7828ms)
+✔ Valida entrada: {"password":"admin"} (0.763ms)
+✔ Valida entrada: {"username":null,"password":"admin"} (1.1879ms)
+✔ Valida entrada: {"username":7,"password":"admin"} (0.7096ms)
+✔ Valida entrada: {"username":{"a":1},"password":"admin"} (0.9298ms)
+✔ Valida entrada: {"username":["admin"],"password":"admin"} (0.7903ms)
+✔ Valida entrada: {"username":"admin","password":[]} (0.8406ms)
+✔ Valida entrada: {"username":"","password":"admin"} (0.9018ms)
+✔ Valida entrada: {"username":"admin","password":""} (0.7129ms)
+✔ Valida entrada: {"username":"   ","password":"admin"} (0.6968ms)
+✔ Valida entrada: {"username":"admin","password":"   "} (0.6777ms)
+✔ Valida entrada: {"username":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","password":"admin"} (0.7505ms)
+✔ Valida entrada: {"username":"admin","password":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"} (0.6807ms)
+✔ Valida entrada: null (2.7194ms)
+✔ Longitud máxima válida se procesa (0.9557ms)
+✔ JSON mal formado no revela detalles internos (0.7602ms)
+✔ Cuerpo demasiado grande se rechaza (1.1544ms)
+✔ Cuerpo ausente se rechaza (0.7321ms)
+✔ Alias seguro acepta acceso válido (0.8638ms)
+✔ Alias seguro rechaza inyección (0.8275ms)
+✔ Formulario disponible y conectado (2.2683ms)
+✔ Código fuente no publicado por HTTP (0.8413ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 265.5174

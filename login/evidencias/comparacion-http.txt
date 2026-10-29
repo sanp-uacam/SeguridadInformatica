@@ -1,0 +1,20 @@
+
+> seginfo@1.0.0 compare
+> node tests/compare.cjs
+
+P01 Comentario: 200 -> 401
+P02 Comentario con otro usuario: 200 -> 401
+P03 Comentario sin espacio previo: 200 -> 401
+P04 Tautología numérica: 200 -> 401
+P05 Tautología de texto: 200 -> 401
+P06 Tautología con usuario: 200 -> 401
+P07 Inyección en contraseña: 200 -> 401
+P08 Contraseña y comentario: 200 -> 401
+P09 UNION: usuario inventado: 200 -> 401
+P10 UNION: extracción de contraseña: 200 -> 401
+P11 Comentario y condición: 200 -> 401
+P12 Contraseña: comparación numérica: 200 -> 401
+P13 Comilla suelta: fuga de error: 500 -> 401
+P14 UNION con columnas incorrectas: 500 -> 401
+P15 Comentario de MySQL no válido: 500 -> 401
+P16 Condición falsa de control: 401 -> 401
